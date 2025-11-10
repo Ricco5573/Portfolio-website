@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Case Study of Project 1</title>
+    <title>Alien Abductors</title>
     <meta name="description" content="Case study page of Project" />
 
     <link rel="stylesheet" href="css/style.css" />
@@ -16,18 +16,32 @@
       rel="stylesheet"
     />
   </head>
+  <style>
+      .project-cs-hero {
+    color: #fff;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(248, 248, 248, 0.8)), url(../../assets/svg/common-bg.svg);
+  }
+  pre{
+  font-family: Consolas,"courier new";
+  color: crimson;
+  background-color: #f1f1f1;
+  padding: 2px;
+  font-size: 105%;
+}
+</style>
+  </style>
   <body>
     <header class="header">
       <div class="header__content">
         <div class="header__logo-container">
           <div class="header__logo-img-cont">
             <img
-              src="./assets/png/john-doe.png"
+              src="./assets/png/me.png"
               alt="Ram Maheshwari Logo Image"
               class="header__logo-img"
             />
           </div>
-          <span class="header__logo-sub">John Doe</span>
+          <span class="header__logo-sub">Riley Boekestijn</span>
         </div>
         <div class="header__main">
           <ul class="header__links">
@@ -84,16 +98,16 @@
     </header>
     <section class="project-cs-hero">
       <div class="project-cs-hero__content">
-        <h1 class="heading-primary">Project 1</h1>
+        <h1 class="heading-primary">Alien Abductors</h1>
         <div class="project-cs-hero__info">
           <p class="text-primary">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
-            in numquam incidunt earum quaerat cum fuga, atque similique natus
-            nobis sit.
+              A return to form. Completely written in javascript, everything in this game is made by me,
+              with the exception of the music (i tried to, but im just not build like that).
+              
           </p>
         </div>
         <div class="project-cs-hero__cta">
-          <a href="#" class="btn btn--bg" target="_blank">Live Link</a>
+          <a href="./Game1/index.html" class="btn btn--bg" target="_blank">Live Link</a>
         </div>
       </div>
     </section>
@@ -102,7 +116,7 @@
         <div class="project-details__content">
           <div class="project-details__showcase-img-cont">
             <img
-              src="./assets/jpeg/project-mockup-example.jpeg"
+              src="./assets/png/Game1.png"
               alt="Project Image"
               class="project-details__showcase-img"
             />
@@ -111,20 +125,114 @@
             <div class="project-details__desc">
               <h3 class="project-details__content-title">Project Overview</h3>
               <p class="project-details__desc-para">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque
-                alias tenetur minus quaerat aliquid, aut provident blanditiis,
-                deleniti aspernatur ipsam eaque veniam voluptatem corporis vitae
-                mollitia laborum corrupti ullam rem. Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Neque alias tenetur minus quaerat
-                aliquid, aut provident blanditiis, deleniti aspernatur ipsam
-                eaque veniam voluptatem corporis vitae mollitia laborum corrupti
-                ullam rem?
+                It was a simple project where we had to make a twist on space invaders.
+                What started out as a simple arcade game quickly turned into a bullet heaven game that turned heads
+                at the project reveal.
+                With endless scaling, and a LOT of enemies, there was also a lot of optimization done.
               </p>
               <p class="project-details__desc-para">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque
-                alias tenetur minus quaerat aliquid, aut provident blanditiis,
-                deleniti aspernatur ipsam eaque veniam voluptatem corporis vitae
-                mollitia laborum corrupti ullam rem?
+                My first step in optimization was quadtrees! i wanted enemies to collide with one another, so this 
+                was a necessary part of that. I build it from scratch, looking back at it, the system works. But not as neatly
+                as i thought it did at the time. Theoretically it should be dynamic, scaling the quadtree based on enemies.
+                However, though it scales downwards (with more quadtrees). It doesnt come back up once enemies have left.
+                The performance impact is negligable however, and the only consequence you see ingame
+                is that sometimes the enemies do a weird shuffle around invisible enemies (that shouldnt be there).
+
+
+                
+              <p class="project-details__desc-para">
+                                <pre>
+                  class QuadTree{
+    constructor(box, cap){
+        this.box = box;
+        this.capacity = cap;
+        this.points = [];
+        this.divided = false;
+    }
+
+    Update(){
+        if(!this.divided){
+        for(let p of this.points){
+            if (!this.box.contains(p)){
+                let ind = this.points.indexOf(p);
+                this.points.splice(ind, 1);
+                qt.insert(p);
+            }
+        }
+    }
+    else{
+        this.NW.Update();
+        this.NE.Update();
+        this.SW.Update();
+        this.SE.Update();
+    }
+    }
+
+    subdivide(){
+        let nwr = new Rectangle(createVector(this.box.position.x - this.box.size.x /2,
+        this.box.position.y - this.box.size.y /2), createVector(this.box.size.x/2, this.box.size.y/2));
+        
+        this.NW = new QuadTree(nwr, this.capacity);
+        let ner = new Rectangle(createVector(this.box.position.x + this.box.size.x /2,
+        this.box.position.y - this.box.size.y /2), createVector(this.box.size.x/2, this.box.size.y/2))
+        this.NE = new QuadTree(ner, this.capacity);
+
+        let swr = new Rectangle(createVector(this.box.position.x - this.box.size.x /2, 
+        this.box.position.y + this.box.size.y /2), createVector(this.box.size.x/2, this.box.size.y/2));
+        this.SW = new QuadTree(swr, this.capacity);
+
+        let ser = new Rectangle(createVector(this.box.position.x + this.box.size.x /2, 
+        this.box.position.y + this.box.size.y /2), createVector(this.box.size.x/2, this.box.size.y/2))
+        this.SE = new QuadTree(ser, this.capacity);
+
+        this.divided = true;
+
+    }
+    insert(point){
+        if(point !== undefined){
+        if(!this.box.contains(point)){
+            return;
+        }
+        if(this.points.length < this.capacity){
+
+            this.points.push(point);
+            point.SetTreeLayer(this.points);
+            
+        }
+        else {
+            if(!this.divided){
+            this.subdivide();
+            }
+            this.NW.insert(point);
+            this.NE.insert(point);
+            this.SW.insert(point);
+            this.SE.insert(point);
+        }
+    }
+}
+}
+</pre>
+              </p>
+              </p>
+              
+
+              <p class="project-details__desc-para">
+                Second was object culling. Normally this wouldnt be a problem for a 2D game. However javascript doesnt
+                support using GPU graphics (at least not directly). So it renders everything via the CPU, which isnt quite effecient.
+                I do this simply, by checking the player position, and adding the screen size to it to get the max distance sprites can render at
+              </p>
+              <p>
+                <pre>
+if(player != null){
+  let playerposition = player.GetPosition();
+    if(this.position.x +shake.x < playerposition.x + canvasSize.x/2 + 15 &&
+      this.position.x +shake.x > playerposition.x - canvasSize.x/2 - 15 &&
+      this.position.y + shake.y < playerposition.y + canvasSize.y/2 + 15 &&
+      this.position.y + shake.y > playerposition.y - canvasSize.y/2 -15){ 
+        image(this.sprite, this.position.x + shake.x, this.position.y + shake.y);
+      }
+    }
+                </pre>
               </p>
             </div>
             <div class="project-details__tools-used">
@@ -133,30 +241,16 @@
                 <div class="skills__skill">HTML</div>
                 <div class="skills__skill">CSS</div>
                 <div class="skills__skill">JavaScript</div>
-                <div class="skills__skill">React</div>
-                <div class="skills__skill">SASS</div>
-                <div class="skills__skill">GIT</div>
-                <div class="skills__skill">Shopify</div>
-                <div class="skills__skill">Wordpress</div>
-                <div class="skills__skill">Google ADS</div>
-                <div class="skills__skill">Facebook Ads</div>
-                <div class="skills__skill">Android</div>
-                <div class="skills__skill">IOS</div>
+                <div class="skills__skill">Aseprite</div>
               </div>
             </div>
             <div class="project-details__links">
               <h3 class="project-details__content-title">See Live</h3>
               <a
-                href="#"
+                href="./Game1/index.html"
                 class="btn btn--med btn--theme project-details__links-btn"
                 target="_blank"
                 >Live Link</a
-              >
-              <a
-                href="#"
-                class="btn btn--med btn--theme-inv project-details__links-btn"
-                target="_blank"
-                >Code Link</a
               >
             </div>
           </div>
@@ -185,34 +279,12 @@
                   alt="icon"
                 />
               </a>
-              <a target="_blank" rel="noreferrer" href="#">
-                <img
-                  class="main-footer__icon"
-                  src="./assets/png/twitter-ico.png"
-                  alt="icon"
-                />
-              </a>
-              <a target="_blank" rel="noreferrer" href="#">
-                <img
-                  class="main-footer__icon"
-                  src="./assets/png/yt-ico.png"
-                  alt="icon"
-                />
-              </a>
-              <a target="_blank" rel="noreferrer" href="#">
-                <img
-                  class="main-footer__icon main-footer__icon--mr-none"
-                  src="./assets/png/insta-ico.png"
-                  alt="icon"
-                />
-              </a>
+            
             </div>
           </div>
           <div class="main-footer__row main-footer__row-2">
-            <h4 class="heading heading-sm text-lt">John Doe</h4>
+            <h4 class="heading heading-sm text-lt">Riley Boekestijn</h4>
             <p class="main-footer__short-desc">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit facilis
-              tempora explicabo quae quod deserunt
             </p>
           </div>
         </div>
