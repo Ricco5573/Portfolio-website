@@ -21,6 +21,13 @@
     color: #fff;
     background: linear-gradient(to right, rgba(98, 0, 134, 0.8), rgba(1, 92, 49, 0.8)), url(../../assets/svg/common-bg.svg);
   }
+  pre{
+  font-family: Consolas,"courier new";
+  color: crimson;
+  background-color: #f1f1f1;
+  padding: 2px;
+  font-size: 105%;
+}
   </style>
   <body>
     <header class="header">
@@ -107,7 +114,7 @@
         <div class="project-details__content">
           <div class="project-details__showcase-img-cont">
             <img
-              src="./assets/png/Game2-1.png"
+              src="./assets/png/concept art.png"
               alt="Project Image"
               class="project-details__showcase-img"
             />
@@ -121,9 +128,128 @@
                 Which will automatically be added to the game. 
               </p>
               <p class="project-details__desc-para">
-                All upgrades scale with one another linearly, so some crazy combinations can be made.
-            
+                The upgrade system is quite a beast, so lemme explain my code here.
+                <pre>
+
+public class Upgrade : SpriteGameObject
+{
+    public string name {get; set;}
+    public string description {get; set;}
+    public JsonObject[] modifications {get; set;}
+    public List<Modification> mods{get; set;}
+    public int spriteID {get; set;}
+    
+    public Upgrade(string name, string description, JsonObject[] modifications,
+    int spriteID) : base("Images/Upgrade", 0, " ", 0)
+    {
+        this.modifications = modifications;
+        this.name = name;
+        this.description = description;    
+        this.spriteID = spriteID; 
+        mods = new List<Modification>();
+        for(int i = 0; i < modifications.Length; i++){
+            Modification mod = JsonSerializer.Deserialize<Modification>(modifications[i]);
+            mods.Add(mod);
+        }
+    }
+
+                </pre>
               </p>
+                <p class="project-details__desc-para">
+                An upgrade consists of a name, a description which will show when hovered over.
+                It has an ID for a sprite which we didnt end up using, but would be used to show different rarities of upgrades.
+                then, it has mods, or modifications.
+                each modification is a change to a stat.
+
+              <pre>
+
+public class Modification
+  {
+      public int variableId {get; set;}
+      public int multiplicative {get; set;}
+      public float mod {get; set;}
+
+      public Modification(int variableId = 1, int multiplicative = 1, float mod = 0.0f){
+          this.variableId = variableId;
+          this.multiplicative = multiplicative;
+          this.mod = mod;
+      }
+
+              </pre>
+              </p>
+              <p class="project-details__desc-para">
+                Each mod has a variableId, that being the ID of the stat they are modifying.
+                an int for multiplicativity, where 0 is yes, and 1 is no (because a JSON doesnt allow booleans).
+                And lastly, the modification itself. That being a full number. 
+                In the end, a full upgrade would look something like this:
+
+                <pre>
+                  {
+  "name": "More powder",
+  "description": "Deal 1 extra damage, bullets move 50% faster",
+  "modifications": [
+      {
+        "variableId": 4,
+        "multiplicative": 0,
+        "mod": 1.5
+      },
+      {
+        "variableId": 7,
+        "multiplicative": 1,
+        "mod": 1
+      }
+    ],
+    "spriteIndex": 1
+  },
+                </pre>
+              </p>
+              <p class="project-details__desc-para">
+                After this, the upgrades go into slots, and simply put, everytime the player shoots, it will loop through
+                all equipped upgrades, and apply them to the projectile.
+                Now to be fair, there mightve been better ways to do it than a switch case with every ID in it. But this
+                was a solution understandable by my teammates, which allowed them to expand it as well.
+
+                <pre>
+
+  foreach(UpgradeSlot up in upgradeSlots){
+     if(up != null && up.GetUpgrade() != null){
+      List<Modification> mods = up.GetUpgrade().GetMods();
+      foreach(Modification mod in mods){
+          int id = mod.GetVarId();
+          float change = mod.GetMod();
+          switch(id){
+             case 0: adjFireRate  = mod.GetMult() ? adjFireRate * change : 
+             adjFireRate + change;
+             break;
+             case 1: adjProjectiles = mod.GetMult() ? (int)(adjProjectiles * change) : 
+             (int)(adjProjectiles + change);
+             break;
+             case 2: adjSpread = mod.GetMult() ? (int)(adjSpread * change) : 
+             (int)(adjSpread + change);
+             break;
+             case 3: adjMoveSpeed = mod.GetMult() ? adjMoveSpeed * change : 
+             adjMoveSpeed + change;
+             break;
+             case 4: adjProjectileSpeed = mod.GetMult() ? adjProjectileSpeed * change : 
+             adjProjectileSpeed + change;
+             break;
+             case 5: tempExplosive = change == 1;
+             break;
+             case 6: adjUpgradeChance = mod.GetMult() ? adjUpgradeChance * change : 
+             adjUpgradeChance + change;
+             break;
+             case 7: tempProjectileDamage = mod.GetMult() ? (int)(tempProjectileDamage * change) : 
+             (int)(tempProjectileDamage + change);
+             break;
+             case 8: adjProjectileSize = mod.GetMult() ? adjProjectileSize * change :
+             adjProjectileSize + change;
+             break;
+         }
+     } 
+ }
+                </pre>
+              </p>
+              
             </div>
             <div class="project-details__tools-used">
               <h3 class="project-details__content-title">Tools Used</h3>
