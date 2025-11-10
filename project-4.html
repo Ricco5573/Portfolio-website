@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Apocrypha</title>
+    <meta name="description" content="Case study page of Project" />
+
+    <link rel="stylesheet" href="css/style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+    <style> 
+  .project-cs-hero {
+    color: #fff;
+    background: linear-gradient(to right, rgba(99, 67, 18, 0.8), rgba(1, 92, 49, 0.8)), url(../../assets/svg/common-bg.svg);
+  }
+  pre{
+  font-family: Consolas,"courier new";
+  color: crimson;
+  background-color: #f1f1f1;
+  padding: 2px;
+  font-size: 105%;
+}
+  </style>
+  <body>
+    <header class="header">
+      <div class="header__content">
+        <div class="header__logo-container">
+          <div class="header__logo-img-cont">
+            <img
+              src="./assets/png/me.png"
+              alt="Ram Maheshwari Logo Image"
+              class="header__logo-img"
+            />
+          </div>
+          <span class="header__logo-sub">Riley Boekestijn</span>
+        </div>
+        <div class="header__main">
+          <ul class="header__links">
+            <li class="header__link-wrapper">
+              <a href="./index.html" class="header__link"> Home </a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="./index.html#about" class="header__link">About </a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="./index.html#projects" class="header__link">
+                Projects
+              </a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="./index.html#contact" class="header__link"> Contact </a>
+            </li>
+          </ul>
+          <div class="header__main-ham-menu-cont">
+            <img
+              src="./assets/svg/ham-menu.svg"
+              alt="hamburger menu"
+              class="header__main-ham-menu"
+            />
+            <img
+              src="./assets/svg/ham-menu-close.svg"
+              alt="hamburger menu close"
+              class="header__main-ham-menu-close d-none"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="header__sm-menu">
+        <div class="header__sm-menu-content">
+          <ul class="header__sm-menu-links">
+            <li class="header__sm-menu-link">
+              <a href="./index.html"> Home </a>
+            </li>
+
+            <li class="header__sm-menu-link">
+              <a href="./index.html#about"> About </a>
+            </li>
+
+            <li class="header__sm-menu-link">
+              <a href="./index.html#projects"> Projects </a>
+            </li>
+
+            <li class="header__sm-menu-link">
+              <a href="./index.html#contact"> Contact </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <section class="project-cs-hero">
+      <div class="project-cs-hero__content">
+        <h1 class="heading-primary">Apocrypha</h1>
+        <div class="project-cs-hero__info">
+          <p class="text-primary">
+            A 2d platformer built in javascript. My biggest contribution was a level editor i built.
+          </p>
+        </div>
+        <div class="project-cs-hero__cta">
+          <a href="./game2/index.html" class="btn btn--bg" target="_blank">Live build</a>
+        </div>
+      </div>
+    </section>
+    <section class="project-details">
+      <div class="main-container">
+        <div class="project-details__content">
+          <div class="project-details__showcase-img-cont">
+            <img
+              src="./assets/png/Editor.png"
+              alt="Project Image"
+              class="project-details__showcase-img"
+            />
+          </div>
+          <div class="project-details__content-main">
+            <div class="project-details__desc">
+              <h3 class="project-details__content-title">Project Overview</h3>
+              <p class="project-details__desc-para">
+                The level editor was quite something, i spend most of the project chipping away at it.
+                But as of right now, it somehow still works. Database integration and all!
+                Meaning that you can still make levels, and upload them to the database for others to try out!
+              </p>
+              <p class="project-details__desc-para">
+                Now the editor is quite self explanatory. You place items, which are just copied onto the place you click.
+                When pressing B you start the game, and pressing it again brings you back into the editor mode. Allowing you to quickly
+                test parts of your level.
+
+                This was done by simply pauzing all physics interactions.
+                When the player is done. They save the map to a JSON.
+                That is done as follows
+                <pre>
+async function SaveMapToJSON(name, id){
+    let json = [];
+    let query = `INSERT INTO Maps (MapId, MapName, MapData) VALUES (${id}, "${name}",?);`
+    for(let object of mapObjects){
+        let objectIndex;
+        let data = [];
+        if(object != plat){
+            //print(object.constructor.name);
+        switch(object.constructor.name){
+            case "StaticDecor": objectIndex = 3; break;
+            case "SteamRelay": objectIndex = 4; break;
+            case "ChaseEnemy": objectIndex = 5;break;
+            case "Player": objectIndex = 6; break;
+            case "TitleTrigger": objectIndex = 7; break;
+            case "Goal": objectIndex = 8; break; 
+        }
+        if(objectIndex != 7){
+        data = { objIndex: objectIndex, pos: object.GetPosition(),size: object.GetSize(),
+        layer: object.renderLayer,spriteIndex: object.spriteIndex};
+        }
+        else{
+        data = { objIndex: objectIndex, pos: object.GetPosition(),size: object.GetSize(),
+            layer: object.renderLayer, title: object.title, time: 5000}
+        }
+        print(object.spriteIndex)
+        json.push(data);        
+    }
+
+                </pre>
+              </p>
+              <p class="project-details__desc-para">
+                Each object within the map is reduced to an obj. containing an index for which object it represents,
+                a position, a size, a renderlayer and a spriteIndex.
+                renderlayers allow objects to be used as decoration as well as platforms. It allows items to be placed
+                in the background and foreground, allowing for a fun effect as the player runs between sets of pillars!
+              </p>
+              <div class="project-details__showcase-img-cont">
+              <img src="assets/png/layering.png" class="project-details__showcase-img"></img>
+              </div>
+              <p class="project-details__desc-para">
+                Now the exception are platforms, because there are several kinds of platforms.
+                Regular platforms, and moving ones. Initially we also had platforms you could drop down through
+                but we ended up scrapping those.
+                Regardless, another check is made for what kind of platform, and extra data is stored based thereupon.
+
+                <pre>
+                  
+    else{
+        for(let platform of plat.platforms){
+            let pos;
+            if(platform.constructor.name == "MovingPlatform"){
+                objectIndex = 2;
+                pos = platform.firstPosition;
+                data = {objIndex: objectIndex, pos: pos, movePos: platform.secondPosition, size: platform.GetSize(), 
+                    layer: platform.renderLayer, spriteIndex: platform.spriteIndex}
+            }
+            else if(platform.constructor.name == "Platform"){
+                objectIndex = 1;
+                pos = platform.GetPosition();
+                data = {objIndex: objectIndex, pos: pos, size: platform.GetSize(), 
+                    layer: platform.renderLayer, spriteIndex: platform.spriteIndex}
+            }
+            json.push(data);
+        }
+    }
+                </pre>
+            </p>
+              <p class="project-details__desc-para">
+                From there, the player can give the level a name. After which its uploaded to a database. Which may or may not be down 
+                depending on how long from now you try it. Now i know again, that this wasnt the best way to handle the database 
+                as im just throwing the entire JSON file on there, given that JSON have a limited size within a standard database. However,
+                considering all im saving is text, the map could reach several tens of thousands of objects before i would come anywhere near the 
+                limits of the database.
+                Far faster to run out would be your graphical memory
+            </p>
+              <p class="project-details__desc-para">
+                Which isnt quite a joke, despite my best attempts the game isnt greatly optimized, the amount of sprites weve used, their size 
+                and the fact were modifying them makes any CPU crumple.
+                Which is the main problem, rendering is done via the CPU. Though ive attempted to make it render via the GPU, ive so far 
+                been unsuccessfull in actually doing it. This also results in quite a large lagspike when first loading into the game.
+              </p>
+            </div>
+            <div class="project-details__tools-used">
+              <h3 class="project-details__content-title">Tools Used</h3>
+              <div class="skills">
+                <div class="skills__skill">Javascript</div>
+              </div>
+            </div>
+            <div class="project-details__links">
+              <h3 class="project-details__content-title">project link</h3>
+              <a
+                href="./game2/index.html"
+                class="btn btn--med btn--theme-inv project-details__links-btn"
+                target="_blank"
+                >Game link</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="main-footer">
+      <div class="main-container">
+        <div class="main-footer__upper">
+          <div class="main-footer__row main-footer__row-1">
+            <h2 class="heading heading-sm main-footer__heading-sm">
+              <span>Social</span>
+            </h2>
+            <div class="main-footer__social-cont">
+              <a target="_blank" rel="noreferrer" href="#">
+                <img
+                  class="main-footer__icon"
+                  src="./assets/png/linkedin-ico.png"
+                  alt="icon"
+                />
+              </a>
+              <a target="_blank" rel="noreferrer" href="#">
+                <img
+                  class="main-footer__icon"
+                  src="./assets/png/github-ico.png"
+                  alt="icon"
+                />
+              </a>
+            
+            </div>
+          </div>
+          <div class="main-footer__row main-footer__row-2">
+            <h4 class="heading heading-sm text-lt">Riley Boekestijn</h4>
+            <p class="main-footer__short-desc">
+
+            </p>
+          </div>
+        </div>
+
+        <div class="main-footer__lower">
+          &copy; Copyright 2021. Made by
+          <a rel="noreferrer" target="_blank" href="https://rammaheshwari.com"
+            >Ram Maheshwari</a
+          >
+        </div>
+      </div>
+    </footer>
+    <script src="./index.js"></script>
+  </body>
+</html>

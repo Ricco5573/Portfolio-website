@@ -40,7 +40,7 @@ headerLogoConatiner.addEventListener('click', () => {
 
 
  //Array of images which you want to show: Use path you want.
-  var images=new Array('./assets/png/Game2.png','./assets/png/prototype.png','./assets/png/Bossfight.png', './assets/png/post.png');
+  var images=new Array('./assets/png/Game2.png','./assets/png/prototype.png','./assets/png/Bossfight.png', './assets/png/editor.png', './assets/png/post.png');
   var nextimage=0;
     console.log("slideshow");
 
