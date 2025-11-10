@@ -36,3 +36,22 @@ const headerLogoConatiner = document.querySelector('.header__logo-container')
 headerLogoConatiner.addEventListener('click', () => {
   location.href = 'index.html'
 })
+
+
+
+ //Array of images which you want to show: Use path you want.
+  var images=new Array('./assets/png/Game2.png','./assets/png/prototype.png','./assets/png/Bossfight.png', './assets/png/post.png');
+  var nextimage=0;
+    console.log("slideshow");
+
+  doSlideshow();
+
+function doSlideshow(){
+
+    if(nextimage>=images.length){nextimage=0;}
+    $('.home-hero')
+    .css('background-image','url("'+images[nextimage++]+'")')
+    .fadeIn(10000,function(){
+        setTimeout(doSlideshow,10000);
+    });
+  }
