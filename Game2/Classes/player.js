@@ -3,7 +3,7 @@ const MELEE_COOLDOWN = 10;
 const DASH_COOLDOWN = 30;
 const INVULNERABILITY_COOLDOWN = 25;
 class Player extends CollisionObject{
-    #walkAnimBottom;
+    #walkAnimBottom; //
     #walkAnimTop;
     #idleAnimBottom;
     #idleAnimTop;
