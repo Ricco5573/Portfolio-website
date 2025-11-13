@@ -523,25 +523,25 @@ class Player extends CollisionObject{
 async #InitializeAnimationController(){
         this.#animsInitialized = true;
         //Initializing each animation, and assigning them a node.
-        this.#walkAnimBottom = new Anim(this.position, await loadImage('./Assets/Sprites/Player/player_run_Lower.gif'), 10, 1, null);
-        this.#walkAnimTop = new Anim(this.position, await loadImage('./Assets/Sprites/Player/player_run_Upper.gif'), 10, 1, null);
+        this.#walkAnimBottom = new Anim(this.position, await loadImage('./assets/Sprites/Player/player_run_Lower.gif'), 10, 1, null);
+        this.#walkAnimTop = new Anim(this.position, await loadImage('./assets/Sprites/Player/player_run_Upper.gif'), 10, 1, null);
         let walkAnimBottomNode = new AnimationNode(this.#walkAnimBottom, true, false, null);
         let walkAnimTopNode = new AnimationNode(this.#walkAnimTop, true, true, walkAnimBottomNode);
-        this.#idleAnimBottom = new Anim(this.position, await loadImage('./Assets/Sprites/Player/player_idle_Lower.gif'), 10, 1, null);
-        this.#idleAnimTop = new Anim(this.position, await loadImage('./Assets/Sprites/Player/player_idle_Upper.gif'), 10, 1, null);
+        this.#idleAnimBottom = new Anim(this.position, await loadImage('./assets/Sprites/Player/player_idle_Lower.gif'), 10, 1, null);
+        this.#idleAnimTop = new Anim(this.position, await loadImage('./assets/Sprites/Player/player_idle_Upper.gif'), 10, 1, null);
         let idleAnimBottomNode = new AnimationNode(this.#idleAnimBottom,true, false, null);
         let idleAnimTopNode = new AnimationNode(this.#idleAnimTop, true, true, idleAnimBottomNode);
-        this.#jumpStopAnim = new Anim(this.position, await loadImage('./Assets/Sprites/Player/player_jump_end.gif'), 10, 1, null);
+        this.#jumpStopAnim = new Anim(this.position, await loadImage('./assets/Sprites/Player/player_jump_end.gif'), 10, 1, null);
         let jumpStopAnimNode = new AnimationNode(this.#jumpStopAnim,false, false, null);
-        this.#jumpLoopAnim = new Anim(this.position, await loadImage('./Assets/Sprites/Player/player_jump_Loop.gif'), 10, 1, null);
+        this.#jumpLoopAnim = new Anim(this.position, await loadImage('./assets/Sprites/Player/player_jump_Loop.gif'), 10, 1, null);
         let jumpLoopAnimNode = new AnimationNode(this.#jumpLoopAnim, false, false, null);
-        this.#jumpStartAnim = new Anim(this.position, await loadImage('./Assets/Sprites/Player/player_Jump_Start.gif'), 10, 1,this.#jumpLoopAnim);
+        this.#jumpStartAnim = new Anim(this.position, await loadImage('./assets/Sprites/Player/player_Jump_Start.gif'), 10, 1,this.#jumpLoopAnim);
         let jumpStartAnimNode = new AnimationNode(this.#jumpStartAnim, false, false, null);
-        this.#wallSlideAnim = new Anim(this.position, await loadImage('./Assets/Sprites/Player/player_wall_slide.gif'), 10, 1, null);
+        this.#wallSlideAnim = new Anim(this.position, await loadImage('./assets/Sprites/Player/player_wall_slide.gif'), 10, 1, null);
         let wallSlideAnimNode = new AnimationNode(this.#wallSlideAnim,false,false,null);
-        this.#shootAnimTop = new Anim(this.position, await loadImage('./Assets/Sprites/Player/player_shoot_Upper.gif'), 10, 1, this.#idleAnimTop);
+        this.#shootAnimTop = new Anim(this.position, await loadImage('./assets/Sprites/Player/player_shoot_Upper.gif'), 10, 1, this.#idleAnimTop);
         let shootAnimTopNode = new AnimationNode(this.#shootAnimTop, true, true, null);
-        this.#reloadAnimTop = new Anim(this.position, await loadImage('./Assets/Sprites/Player/player_reload_Upper.gif'), 10, 1, this.#idleAnimTop);
+        this.#reloadAnimTop = new Anim(this.position, await loadImage('./assets/Sprites/Player/player_reload_Upper.gif'), 10, 1, this.#idleAnimTop);
         let reloadAnimTopNode = new AnimationNode(this.#reloadAnimTop, true, true, null);
         
         //Initialize the transitions for each animation;
