@@ -4,7 +4,7 @@ class Renderer{
     #darkness;
     constructor(){
         this.#ResetRenderLayers();
-        this.#darkness = new Sprite(createVector(canvasSize.x/2, canvasSize.y/2), loadImage('./Assets/images/Darkness.jpg'), 20);
+        this.#darkness = new Sprite(createVector(canvasSize.x/2, canvasSize.y/2), loadImage('./assets/images/Darkness.jpg'), 20);
     }
 
     //Clears the render layers. SHOULD NOT BE EXTERNALLY USED.
